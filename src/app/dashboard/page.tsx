@@ -5,7 +5,7 @@ import InputPanel from "@/components/dashboard/InputPanel";
 import OutputPanel from "@/components/dashboard/OutputPanel";
 import { useGenerate } from "@/hooks/useGenerate";
 import { useDrafts } from "@/hooks/useDrafts";
-import type { Tone } from "@/types/supabase";
+import type { Tone } from "@/app/api/generate/prompts";
 
 export default function DashboardPage() {
   const [topic, setTopic] = useState("");
