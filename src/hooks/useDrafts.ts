@@ -9,13 +9,14 @@ export function useDrafts() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const supabase = createClient();
+  // Cast once to any to bypass Supabase strict generic inference
+  const db = createClient() as any;
 
   const fetchDrafts = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const { data, error } = await supabase
+      const { data, error } = await db
         .from("drafts")
         .select("*")
         .order("created_at", { ascending: false });
@@ -48,10 +49,10 @@ export function useDrafts() {
       humanScore: number;
     }): Promise<Draft | null> => {
       try {
-        const { data: { user } } = await supabase.auth.getUser();
+        const { data: { user } } = await db.auth.getUser();
         if (!user) return null;
 
-        const { data, error } = await supabase
+        const { data, error } = await db
           .from("drafts")
           .insert({
             user_id: user.id,
@@ -79,7 +80,7 @@ export function useDrafts() {
 
   const deleteDraft = useCallback(async (id: string) => {
     try {
-      const { error } = await supabase.from("drafts").delete().eq("id", id);
+      const { error } = await db.from("drafts").delete().eq("id", id);
       if (error) throw error;
       setDrafts((prev) => prev.filter((d) => d.id !== id));
     } catch {
@@ -96,4 +97,3 @@ export function useDrafts() {
     refetch: fetchDrafts,
   };
 }
-
