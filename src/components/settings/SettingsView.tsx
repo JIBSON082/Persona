@@ -38,7 +38,9 @@ export default function SettingsView() {
   const handleSaveTone = async () => {
     if (!profile) return;
     setSaving(true);
-    await supabase.from("profiles").update({ default_tone: defaultTone } as any).eq("id", profile.id);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const db = supabase as any;
+    await db.from("profiles").update({ default_tone: defaultTone }).eq("id", profile.id);
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
