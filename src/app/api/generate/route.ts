@@ -23,13 +23,11 @@ export async function POST(req: NextRequest) {
 
     // Subscription check — free users get 5 generations/day (expand later)
     const { data: subscription } = await supabase
-      .from("subscriptions")
-      .select("plan, status")
-      .eq("user_id", user.id)
-      .single();
-
-    const isPro =
-      subscription?.plan === "pro" && subscription?.status === "active";
+  .from("subscriptions")
+  .select("plan, status")
+  .eq("user_id", user.id)
+  .returns<{ plan: string; status: string }>()
+  .single();
 
     const body = await req.json();
     const { action, topic, tone, post } = body as {
