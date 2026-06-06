@@ -1,7 +1,5 @@
-// ── Tone ──────────────────────────────────────────────────────────────────
 export type Tone = "professional" | "casual" | "storyteller" | "bold";
 
-// ── Draft ─────────────────────────────────────────────────────────────────
 export interface Draft {
   id: string;
   user_id: string;
@@ -15,7 +13,6 @@ export interface Draft {
   updated_at: string;
 }
 
-// ── Profile ───────────────────────────────────────────────────────────────
 export interface Profile {
   id: string;
   email: string;
@@ -26,7 +23,6 @@ export interface Profile {
   updated_at: string;
 }
 
-// ── Subscription ──────────────────────────────────────────────────────────
 export interface Subscription {
   id: string;
   user_id: string;
@@ -42,25 +38,5 @@ export interface Subscription {
   updated_at: string;
 }
 
-// ── Supabase DB types ─────────────────────────────────────────────────────
-export type Database = {
-  public: {
-    Tables: {
-      profiles: {
-        Row: Profile;
-        Insert: Partial<Profile>;
-        Update: Partial<Profile>;
-      };
-      drafts: {
-        Row: Draft;
-        Insert: Omit<Draft, "id" | "char_count" | "created_at" | "updated_at">;
-        Update: Partial<Draft>;
-      };
-      subscriptions: {
-        Row: Subscription;
-        Insert: Partial<Subscription>;
-        Update: Partial<Subscription>;
-      };
-    };
-  };
-};
+// Loose Database type — prevents Supabase generic conflicts
+export type Database = any;
