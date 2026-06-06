@@ -38,8 +38,8 @@ export default function DashboardPage() {
       topic,
       tone: selectedTone,
       content: displayPost,
-      human_score: humanScore,
-      is_humanized: humanScore !== null && humanScore >= 90,
+      humanScore: humanScore,
+      isHumanized: humanScore !== null && humanScore >= 90,
     });
   };
 
