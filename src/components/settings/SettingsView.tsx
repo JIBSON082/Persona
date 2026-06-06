@@ -38,7 +38,7 @@ export default function SettingsView() {
   const handleSaveTone = async () => {
     if (!profile) return;
     setSaving(true);
-    await supabase.from("profiles").update({ default_tone: defaultTone }).eq("id", profile.id);
+    await supabase.from("profiles").update({ default_tone: defaultTone } as any).eq("id", profile.id);
     setSaving(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
@@ -175,4 +175,3 @@ export default function SettingsView() {
     </div>
   );
 }
-
