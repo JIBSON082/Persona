@@ -1,4 +1,3 @@
-// src/app/dashboard/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -6,43 +5,41 @@ import InputPanel from "@/components/dashboard/InputPanel";
 import OutputPanel from "@/components/dashboard/OutputPanel";
 import { useGenerate } from "@/hooks/useGenerate";
 import { useDrafts } from "@/hooks/useDrafts";
-// 🛠️ Fixed type import path: pointing to lib instead of types
-import type { Tone } from "@/lib/supabase"; 
+import type { Tone } from "@/types/supabase";
 
 export default function DashboardPage() {
   const [topic, setTopic] = useState("");
   const [selectedTone, setSelectedTone] = useState<Tone>("casual");
 
-  // Custom hooks handling the state mechanics & the interactive UI illusion
-  const { 
-    postContent, 
-    humanScore, 
-    isGenerating, 
-    isHumanizing, 
-    generatePost, 
-    humanizePost 
+  const {
+    displayPost,
+    humanScore,
+    isGenerating,
+    isHumanizing,
+    generate,
+    humanize,
   } = useGenerate();
 
   const { saveDraft } = useDrafts();
 
   const handleGenerate = async () => {
     if (!topic.trim()) return;
-    await generatePost({ topic, tone: selectedTone });
+    await generate(topic, selectedTone);
   };
 
   const handleHumanize = async () => {
-    if (!postContent) return;
-    await humanizePost();
+    if (!displayPost) return;
+    await humanize(selectedTone);
   };
 
   const handleSave = async () => {
-    if (!postContent) return;
+    if (!displayPost) return;
     await saveDraft({
       topic,
       tone: selectedTone,
-      content: postContent,
+      content: displayPost,
       human_score: humanScore,
-      is_humanized: humanScore !== null && humanScore >= 90
+      is_humanized: humanScore !== null && humanScore >= 90,
     });
   };
 
@@ -56,7 +53,6 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        {/* Two-Column Premium Layout split precisely into Input vs Output panels */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           <InputPanel
             topic={topic}
@@ -68,7 +64,7 @@ export default function DashboardPage() {
           />
 
           <OutputPanel
-            content={postContent}
+            content={displayPost}
             humanScore={humanScore}
             isGenerating={isGenerating}
             isHumanizing={isHumanizing}
