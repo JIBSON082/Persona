@@ -1,9 +1,7 @@
-// src/lib/supabase.server.ts
 import "server-only";
 import { createServerClient, createBrowserClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
-// 🛠️ Fixed import path: pulled from local supabase file
-import type { Database } from "@/lib/supabase"; 
+import type { Database } from "@/types/supabase";
 
 // ── Server client (API routes, Server Components, middleware) ──────────────
 export async function createServerSupabaseClient() {
