@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
               sub.current_period_end * 1000
             ).toISOString(),
             cancel_at_period_end: sub.cancel_at_period_end,
-          })
+          }as never)
           .eq("user_id", userId);
         break;
       }
