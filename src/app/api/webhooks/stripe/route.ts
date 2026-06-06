@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
               sub.current_period_end * 1000
             ).toISOString(),
             cancel_at_period_end: sub.cancel_at_period_end,
-          }as never)
+          } as never)
           .eq("user_id", userId);
         break;
       }
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
 
         await supabase
           .from("subscriptions")
-          .update({ plan: "free", status: "canceled" })
+          .update({ plan: "free", status: "canceled" } as never)
           .eq("user_id", userId);
         break;
       }
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
 
         await supabase
           .from("subscriptions")
-          .update({ status: "past_due" })
+          .update({ status: "past_due" } as never)
           .eq("stripe_subscription_id", subId);
         break;
       }
