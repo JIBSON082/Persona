@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { createServerSupabaseClient } from "@/lib/supabase";
+import { createServerSupabaseClient } from "@/lib/supabase.server";
 import {
   buildGeneratePrompt,
   buildHumanizePrompt,
@@ -134,4 +134,3 @@ export async function POST(req: NextRequest) {
     );
   }
 }
-
