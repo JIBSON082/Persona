@@ -1,3 +1,5 @@
+// src/lib/supabase.ts
+import { createBrowserClient } from "@supabase/ssr";
 
 // ── Tone ──────────────────────────────────────────────────────────────────
 export type Tone = "professional" | "casual" | "storyteller" | "bold";
@@ -43,7 +45,7 @@ export interface Subscription {
   updated_at: string;
 }
 
-// ── Supabase DB types (simplified — replace with generated types) ─────────
+// ── Supabase DB types ─────────────────────────────────────────────────────
 export type Database = {
   public: {
     Tables: {
@@ -53,3 +55,12 @@ export type Database = {
     };
   };
 };
+
+// ── Browser Client Initializer ────────────────────────────────────────────
+// This fixes the "Attempted import error: 'createClient' is not exported" bug.
+export function createClient() {
+  return createBrowserClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+}
